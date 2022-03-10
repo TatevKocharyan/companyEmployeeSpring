@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Companies</title>
+</head>
+<body>
+Companies
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>size</th>
+        <th>address</th>
+    </tr>
+    <tr th:each="company:${companies}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.name}"></td>
+        <td th:text="${company.size}"></td>
+        <td th:text="${company.address}"></td>
+        <td><a th:href="@{'/deletecompany/'+${company.id}}">delete</a></td>
+    </tr>
+</table>
+
+<div style="width: 50%; float: left"> Add Company:<br>
+    <form action="/addCompany" method="post">
+        <input type="text" name="name" placeholder="name"><br>
+        <input type="text" name="size" placeholder="size"><br>
+        <input type="text" name="address" placeholder="address"><br>
+        <input type="submit" value="Add"></form>
+</div>
+
+
+</body>
+</html>
