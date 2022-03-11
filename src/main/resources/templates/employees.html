@@ -7,7 +7,7 @@
 <body>
 Employees:
 
-<table>
+<table th:if="${employees!=null}">
     <tr>
         <th>id</th>
         <th>name</th>
@@ -17,6 +17,7 @@ Employees:
         <th>salary</th>
         <th>position</th>
         <th>company</th>
+        <th>picture</th>
     </tr>
     <tr th:each="employee:${employees}">
         <td th:text="${employee.id}"></td>
@@ -27,21 +28,27 @@ Employees:
         <td th:text="${employee.salary}"></td>
         <td th:text="${employee.position}"></td>
         <td th:text="${employee.company.getName()}"></td>
+<td>
+    <img th:if="${employee.picUrl!=null}" th:src="@{/getImage(picName=${employee.picUrl})}" width="100" height="100">
+    <img th:if="${employee.picUrl==null}" th:src="/img/img.png" width="100" height="100">
+
+</td>
         <td><a th:href="@{'/deleteemployee/'+${employee.id}}">delete</a></td>
 
     </tr>
 </table>
 
 <div style="width: 50%; float: left"> Add Employee:<br>
-    <form action="/addemployee" method="post">
+    <form action="/addemployee" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="name"><br>
         <input type="text" name="surname" placeholder="surname"><br>
         <input type="text" name="email" placeholder="email"><br>
-        <input type="text" name="phonenumber" placeholder="phone number"><br>
-        <input type="text" name="salary" placeholder="salary"><br>
+        <input type="text" name="phoneNumber" placeholder="phone number"><br>
+        <input type="number" name="salary" placeholder="salary"><br>
         <input type="text" name="position" placeholder="position"><br>
+        <input type="file" name="picture">
         <label>Choose a company</label>
-        <select name="company.id" > <br>
+        <select name="company.id"> <br>
             <option th:each="company:${companies}" th:text="${company.getName()}" th:value="${company.id}"></option>
         </select>
         <input type="submit" value="Add"></form>
